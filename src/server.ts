@@ -10,23 +10,33 @@ async function startSocketIO() {
     server.listen(3000, () => {
         console.log("listening on *:3000");
     });
+    return socketio;
 }
 
 
 async function startUWebSockets() {
     const uwebsockets = new UWebSockets();
-
+    return uwebsockets;
 }
 
 async function main() {
     console.log("main");
     const type = process.env.TYPE;
+    let server: Awaited<ReturnType<typeof startSocketIO>> | Awaited<ReturnType<typeof startUWebSockets>>;
     if (type === "SOCKETIO") {
-        await startSocketIO();
+        server = await startSocketIO();
     }
     else if (type === "UWEBSOCKETS") {
-        await startUWebSockets();
+        server = await startUWebSockets();
     }
+    else {
+        throw new Error("Unknown type");
+    }
+
+    setInterval(() => {
+        console.log("broadcasting to all clients");
+        server.emit("Hello from server");
+    }, 10000);
 }
 
 main();

@@ -1,7 +1,7 @@
 import Client from "socket.io-client";
 
 class SocketClient {
-    socket: any;
+    socket;
     constructor() {
         this.socket = Client(`http://localhost:${process.env.PORT}`, {
             transports: ["websocket"],
@@ -20,7 +20,11 @@ class SocketClient {
             console.log("pong");
         });
 
-        
+
+    }
+
+    public emit(message: string) {
+        this.socket.emit("message", message);
     }
     
 }

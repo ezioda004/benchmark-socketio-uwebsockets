@@ -8,14 +8,22 @@ function main() {
     // const socketClient = new SocketClient();
 
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10000; i++) {
+        let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE;
         if (type === "SOCKETIO") {
-            const socketClient = new SocketClient();
+            client = new SocketClient();
         }
         else if (type === "UWEBSOCKETS") {
-            const websocketClient = new WebSocketClient();
-        }    
+            client = new WebSocketClient();
+        }
+        else {
+            throw new Error("Unknown type");
+        }
+
+        client.socket.on("message", (message) => {
+            console.log("got message from server", message);
+        });
     }
 }
 
