@@ -1,0 +1,26 @@
+{
+  "name": "benchmark-socketio-uwebsockets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "socketio.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project ./",
+    "start:client": "pm2 start ecosystem.config.cjs --only client",
+    "start:server": "pm2 start ecosystem.config.cjs --only server"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.7.1",
+    "socket.io-client": "^4.7.1",
+    "typescript": "^5.1.6",
+    "uwebsockets.js": "github:uNetworking/uWebSockets.js#semver:^20",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.5"
+  }
+}
