@@ -9,7 +9,7 @@ function main() {
 
     const url = `wss://benchmarking.vedantu.com`
 
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 4000; i++) {
         let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE;
         if (type === "SOCKETIO") {

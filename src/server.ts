@@ -42,7 +42,7 @@ async function main() {
     setInterval(() => {
         console.log("broadcasting to all clients");
         server.emit("Hello from server");
-    }, 10000);
+    }, 1000);
 }
 
 main();
