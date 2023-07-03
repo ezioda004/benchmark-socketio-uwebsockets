@@ -1,11 +1,17 @@
 import { SocketIO } from "./socketio/socketio.js";
+import express from "express";
 import { createServer } from "http";
 import { UWebSockets } from "./uwebsockets/uwebsockets.js";
 
 
 
 async function startSocketIO() {
-    const server = createServer();
+    
+    const app = express();
+    app.get("/", (req, res) => {
+        res.send("Hello World");
+    });
+    const server = createServer(app);
     const socketio = new SocketIO(server);
     server.listen(3000, () => {
         console.log("listening on *:3000");
