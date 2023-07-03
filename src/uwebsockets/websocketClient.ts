@@ -4,9 +4,9 @@ class WebSocketClient {
     socket: WebSocket;
     url: string;
 
-    constructor() {
-        console.log("WebSocketClient constructor");
-        this.url = `ws://localhost:${process.env.PORT}`;
+    constructor(url: string) {
+        console.log("WebSocketClient constructor", url);
+        this.url = url;
         this.socket = new WebSocket(this.url);
         this.socket.on('open', () => {
             console.log("WebSocketClient open");

@@ -2,8 +2,8 @@ import Client from "socket.io-client";
 
 class SocketClient {
     socket;
-    constructor() {
-        this.socket = Client(`http://localhost:${process.env.PORT}`, {
+    constructor(url: string) {
+        this.socket = Client(url, {
             transports: ["websocket"],
             timeout: 30000,
             reconnectionAttempts: 100,
