@@ -6,7 +6,7 @@ module.exports = {
             env: {
                 PORT: 3000,
                 NODE_ENV: 'production',
-                TYPE: 'SOCKETIO' // SOCKETIO | UWEBSOCKETS
+                TYPE: 'UWEBSOCKETS' // SOCKETIO | UWEBSOCKETS
             }
         },
         {
@@ -16,7 +16,7 @@ module.exports = {
             env: {
                 PORT: 3000,
                 NODE_ENV: 'production',
-                TYPE: 'SOCKETIO' // SOCKETIO | UWEBSOCKETS
+                TYPE: 'UWEBSOCKETS' // SOCKETIO | UWEBSOCKETS
             }
         }
     ],
