@@ -23,7 +23,7 @@ function main() {
         }
 
         client.socket.on("message", (message) => {
-            console.log("got message from server", message);
+            console.log("got message from server", message.toString());
         });
     }
 }
