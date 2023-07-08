@@ -6,6 +6,8 @@ This repo contains a benchmark module for socketio and uwebsockets.
 
 ## Installation
 
+Checkout `ecosystem.config.cjs` for server/client config.
+
 ### Server
 ```
 cd benchmark-socketio-uwebsockets
@@ -36,8 +38,9 @@ ALB handles SSL/TLS certificate during the connection.
 Server emits a 1kb message to all connected clients every second.
 
 #### SocketIO
-Client: SocketIO Client
-Server: SocketIO Server
+**Client**: SocketIO Client (4 c5a.xl machines with 4 node process, each process running 2.5k socketio clients so 10k clients per machine).
+
+**Server**: SocketIO Server (1 c5a.xl machine)
 
 We start out by connection 20k socketio client to the socketio server, we can see overall CPU usage is around 30% and node CPU process is about 90%. We then connect 10k more clients which pushes the CPU to ~35% and node CPU process to 100%. At this point any new connection would mean the CPU will throttle the nodejs process. 
 We see that socketio is able to send 30k messages of 1kb to 30k clients every second at full node CPU process capacity. To push even further we add 10k more clients and we can see from the slope of connection compared to 20-30k client connection that the CPU is throttling the nodejs process.
@@ -53,8 +56,9 @@ We see that socketio is able to send 30k messages of 1kb to 30k clients every se
 
 
 #### uWebSockets
-Client: ws Client
-Server: uWebSockets Server
+**Client**: ws Client (12 c5a.xl machines with 4 node process, each process running 2.5k ws clients so 10k clients per machine)
+
+**Server**: uWebSockets Server (1 c5a.xl machine)
 
 We start out by connection 120k ws client to the uWebSockets server, we can see overall CPU usage is around 30% and node CPU process is about 70%. And this stable at 120k connections.
 During initial connection we see a small spike which is expected as the server is handling the initial connection. We see that uWebSockets is able to send 120k messages of 1kb to 120k clients every second at about 70% node CPU Capacity.
@@ -72,6 +76,6 @@ This can further be pushed to ~150k clients at 100% node CPU capacity.
 
 ### Conclusion
 uWebSockets is able to handle 5x more connections than socketio at 100% node CPU capacity with smaller memory footprint and sending 5x more messages per second.
-We havent talked about node process RAM usage, for uWebSockets it's not a problem, the heap usage always remain <200 MB which is expected since all socket connections are handled in the C++ layer. For socketio, the heap usage is around 1.5GB which is directly proportional to the number of connections. This is because socketio is handling all the connections in the nodejs process.
+We haven't talked about node process RAM usage, for uWebSockets it's not a problem, the heap usage always remains <200 MB which is expected since all socket connections are handled in the C++ layer. For socketio, the heap usage is around 1.5GB which is directly proportional to the number of connections. This is because socketio is handling all the connections in the nodejs process.
 
 
