@@ -1,4 +1,4 @@
-This repo contains benchmark module for socketio and uwebsockets.
+This repo contains a benchmark module for socketio and uwebsockets.
 
 ## Requirements
 - Node 20.3
@@ -38,9 +38,14 @@ ALB handles SSL/TLS certificate during the connection.
 Client: SocketIO Client
 Server: SocketIO Server
 
-CPU:
+**CPU**:
 
-TCP Connections:
+<img width="705" alt="Screenshot 2023-07-08 at 1 18 51 PM" src="https://github.com/ezioda004/benchmark-socketio-uwebsockets/assets/20020273/10ce5a1c-45be-40d8-82d8-3a12037fd574">
+
+
+**TCP Connections**:
+
+<img width="705" alt="Screenshot 2023-07-08 at 1 19 01 PM" src="https://github.com/ezioda004/benchmark-socketio-uwebsockets/assets/20020273/33addd17-e62f-4611-a613-9657e82eebb1">
 
 
 #### uWebSockets
