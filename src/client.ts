@@ -7,15 +7,15 @@ function main() {
     console.log("process.env.PORT", process.env.PORT);
     // const socketClient = new SocketClient();
 
-    const url = `wss://benchmarking.vedantu.com`
+    const url = `wss://localhost:3000`
 
-    for (let i = 0; i < 2500; i++) {
+    for (let i = 0; i < 1; i++) {
         let client: SocketClient | WebSocketClient;
-        const type = process.env.TYPE;
-        if (type === "SOCKETIO") {
+        const type = process.env.TYPE ?? "1";
+        if (type === "0") {
             client = new SocketClient(url);
         }
-        else if (type === "UWEBSOCKETS") {
+        else if (type === "1") {
             client = new WebSocketClient(url);
         }
         else {
@@ -29,3 +29,11 @@ function main() {
 }
 
 main();
+
+/**
+ * TODO
+ * Run app on multiple processes:
+ * 1. add redis to store connected clients
+ * 2. Redis streams for pub-sub
+ * 3. 
+ */
