@@ -5,3 +5,7 @@ export const redis = new Redis({
     port: 6379
 });
 
+export const streamSubscriber = new Redis({
+    host: "localhost",
+    port: 6379
+});

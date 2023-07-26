@@ -1,0 +1,99 @@
+[1690370860028] [46040] [INFO] Listening to port 3000 [External: 60000058abc0] 
+[1690370967228] [46635] [INFO] Listening to port 3000 [External: 600000a776b0] 
+[1690371191568] [47881] [INFO] Listening to port 3000 [External: 600003eb6260] 
+[1690372121376] [52103] [INFO] Listening to port 3000 [External: 6000006e33e0] 
+[1690372124823] [52103] [INFO] connected to pid: 52103 
+[1690372124824] [52103] [INFO] connected to pid: 52103 
+[1690372124824] [52103] [INFO] connected to pid: 52103 
+[1690372126191] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372126192] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372126194] [52103] [INFO] xadd id: 1690372126193-0 
+[1690372126194] [52103] [INFO] redis stream message: ROOM [ [ '1690372126193-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372127556] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372127556] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372127562] [52103] [INFO] redis stream message: ROOM [ [ '1690372127560-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372127563] [52103] [INFO] xadd id: 1690372127560-0 
+[1690372128141] [52103] [INFO] Server received message: clientid:0 true true 
+[1690372128142] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 30>, byteLength: 10 } 
+[1690372128144] [52103] [INFO] xadd id: 1690372128143-0 
+[1690372128144] [52103] [INFO] redis stream message: ROOM [ [ '1690372128143-0', [ '52103', 'clientid:0' ] ] ] 
+[1690372128383] [52103] [INFO] Server received message: clientid:2 true true 
+[1690372128384] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 32>, byteLength: 10 } 
+[1690372128387] [52103] [INFO] xadd id: 1690372128386-0 
+[1690372128388] [52103] [INFO] redis stream message: ROOM [ [ '1690372128386-0', [ '52103', 'clientid:2' ] ] ] 
+[1690372128920] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372128920] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372128921] [52103] [INFO] xadd id: 1690372128921-0 
+[1690372128921] [52103] [INFO] redis stream message: ROOM [ [ '1690372128921-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372130286] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372130287] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372130291] [52103] [INFO] xadd id: 1690372130290-0 
+[1690372130291] [52103] [INFO] redis stream message: ROOM [ [ '1690372130290-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372131458] [52103] [INFO] Server received message: clientid:0 true true 
+[1690372131459] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 30>, byteLength: 10 } 
+[1690372131463] [52103] [INFO] redis stream message: ROOM [ [ '1690372131462-0', [ '52103', 'clientid:0' ] ] ] 
+[1690372131463] [52103] [INFO] xadd id: 1690372131462-0 
+[1690372131652] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372131652] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372131656] [52103] [INFO] redis stream message: ROOM [ [ '1690372131655-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372131656] [52103] [INFO] xadd id: 1690372131655-0 
+[1690372131939] [52103] [INFO] Server received message: clientid:2 true true 
+[1690372131939] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 32>, byteLength: 10 } 
+[1690372131941] [52103] [INFO] xadd id: 1690372131941-0 
+[1690372131941] [52103] [INFO] redis stream message: ROOM [ [ '1690372131941-0', [ '52103', 'clientid:2' ] ] ] 
+[1690372133015] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372133015] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372133017] [52103] [INFO] xadd id: 1690372133016-0 
+[1690372133017] [52103] [INFO] redis stream message: ROOM [ [ '1690372133016-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372134382] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372134382] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372134387] [52103] [INFO] redis stream message: ROOM [ [ '1690372134385-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372134387] [52103] [INFO] xadd id: 1690372134385-0 
+[1690372134773] [52103] [INFO] Server received message: clientid:0 true true 
+[1690372134774] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 30>, byteLength: 10 } 
+[1690372134777] [52103] [INFO] xadd id: 1690372134776-0 
+[1690372134777] [52103] [INFO] redis stream message: ROOM [ [ '1690372134776-0', [ '52103', 'clientid:0' ] ] ] 
+[1690372135495] [52103] [INFO] Server received message: clientid:2 true true 
+[1690372135496] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 32>, byteLength: 10 } 
+[1690372135500] [52103] [INFO] redis stream message: ROOM [ [ '1690372135500-0', [ '52103', 'clientid:2' ] ] ] 
+[1690372135501] [52103] [INFO] xadd id: 1690372135500-0 
+[1690372135747] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372135748] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372135751] [52103] [INFO] xadd id: 1690372135751-0 
+[1690372135751] [52103] [INFO] redis stream message: ROOM [ [ '1690372135751-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372137113] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372137114] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372137118] [52103] [INFO] redis stream message: ROOM [ [ '1690372137118-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372137118] [52103] [INFO] xadd id: 1690372137118-0 
+[1690372138089] [52103] [INFO] Server received message: clientid:0 true true 
+[1690372138090] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 30>, byteLength: 10 } 
+[1690372138094] [52103] [INFO] xadd id: 1690372138094-0 
+[1690372138095] [52103] [INFO] redis stream message: ROOM [ [ '1690372138094-0', [ '52103', 'clientid:0' ] ] ] 
+[1690372138477] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372138477] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372138480] [52103] [INFO] xadd id: 1690372138480-0 
+[1690372138480] [52103] [INFO] redis stream message: ROOM [ [ '1690372138480-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372139051] [52103] [INFO] Server received message: clientid:2 true true 
+[1690372139051] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 32>, byteLength: 10 } 
+[1690372139055] [52103] [INFO] redis stream message: ROOM [ [ '1690372139056-0', [ '52103', 'clientid:2' ] ] ] 
+[1690372139056] [52103] [INFO] xadd id: 1690372139056-0 
+[1690372139842] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372139843] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372139847] [52103] [INFO] redis stream message: ROOM [ [ '1690372139847-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372139848] [52103] [INFO] xadd id: 1690372139847-0 
+[1690372141207] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372141207] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372141211] [52103] [INFO] xadd id: 1690372141211-0 
+[1690372141211] [52103] [INFO] redis stream message: ROOM [ [ '1690372141211-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372141405] [52103] [INFO] Server received message: clientid:0 true true 
+[1690372141406] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 30>, byteLength: 10 } 
+[1690372141409] [52103] [INFO] xadd id: 1690372141410-0 
+[1690372141410] [52103] [INFO] redis stream message: ROOM [ [ '1690372141410-0', [ '52103', 'clientid:0' ] ] ] 
+[1690372142572] [52103] [INFO] Server received message: clientid:1 true true 
+[1690372142573] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 31>, byteLength: 10 } 
+[1690372142577] [52103] [INFO] redis stream message: ROOM [ [ '1690372142577-0', [ '52103', 'clientid:1' ] ] ] 
+[1690372142578] [52103] [INFO] xadd id: 1690372142577-0 
+[1690372142607] [52103] [INFO] Server received message: clientid:2 true true 
+[1690372142607] [52103] [INFO] skt publish ACK: true ArrayBuffer { [Uint8Contents]: <63 6c 69 65 6e 74 69 64 3a 32>, byteLength: 10 } 
+[1690372142610] [52103] [INFO] redis stream message: ROOM [ [ '1690372142611-0', [ '52103', 'clientid:2' ] ] ] 
+[1690372142611] [52103] [INFO] xadd id: 1690372142611-0 

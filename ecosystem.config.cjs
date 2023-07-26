@@ -6,8 +6,9 @@ module.exports = {
             env: {
                 PORT: 3000,
                 NODE_ENV: 'production',
-                TYPE: 'UWEBSOCKETS' // SOCKETIO | UWEBSOCKETS
-            }
+            },
+            exec_mode : "cluster",
+            instances: 4
         },
         {
             name: 'client',
