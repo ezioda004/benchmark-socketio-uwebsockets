@@ -7,7 +7,4 @@ export const redis = new Redis(url);
 
 redis.get("abc", console.log);
 
-export const streamSubscriber = new Redis({
-    host: "localhost",
-    port: 6379
-});
+export const streamSubscriber = new Redis(url);
