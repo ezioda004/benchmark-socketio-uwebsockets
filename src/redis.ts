@@ -5,6 +5,4 @@ const url = "redis://default:JuZnnmFB0pL3FYnjOJ0UN8HhmLD1l9BC@redis-19201.c212.a
 
 export const redis = new Redis(url);
 
-redis.get("abc", console.log);
-
 export const streamSubscriber = new Redis(url);
