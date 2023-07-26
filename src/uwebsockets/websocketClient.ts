@@ -25,7 +25,7 @@ class WebSocketClient {
         if (this.socket.readyState == WebSocket.OPEN) {
             setInterval(() => {
                 this.socket.send(message);
-            }, randomize(1e3, 5e3));
+            }, randomize(2e3, 5e3));
         }
 
         // this.socket.send(message);

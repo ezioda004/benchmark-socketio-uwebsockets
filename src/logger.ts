@@ -10,7 +10,7 @@ export class Logger {
     private logger: fs.WriteStream;
     private static serviceLogger: { [service: string]: Logger };
     private constructor(service: string) {
-        this.logger = fs.createWriteStream(`${service}.log`, {
+        this.logger = fs.createWriteStream(`/var/log/loadtest/${service}.log`, {
             flags: "a+",
         }).on("open", fd => {
             console.log("logger opened for", service, fd);

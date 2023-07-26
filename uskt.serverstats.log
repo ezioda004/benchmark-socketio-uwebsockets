@@ -1,4 +1,0 @@
-[1690371251581] [47881] [INFO] CLIENT_COUNT_KEY: CLIENT_COUNT totalConnections: 0 totalDisConnections: 0 online: 0 totalTransmittedMessages: 0 backPressureCount: 0 serverBackPressureCount: 0 streamEnteriesDeleted: 0 sktsWaitingOnBackPressure: [object Object] sktsWaitingOnBackPressureCount: 0 sktsDrained: 0 
-[1690372124825] [52103] [INFO] client connected, online count: 1 
-[1690372124825] [52103] [INFO] client connected, online count: 2 
-[1690372124825] [52103] [INFO] client connected, online count: 3 
