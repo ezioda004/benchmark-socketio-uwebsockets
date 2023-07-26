@@ -26,14 +26,15 @@ class UWebSockets {
             open: (ws) => {
                 logger.log('connected to pid:', process.pid)
                 clientManager.connect();
-                ws.subscribe(ROOM);
+                let isSubscribed = ws.subscribe(ROOM);
+                logger.log('client subscribed:', isSubscribed);
             },
             message: (ws, message, isBinary) => {
                 if (ws.getBufferedAmount() < MAX_BACKPRESSURE_LENGTH) {
                     const msgStr = ab2str(message);
                     logger.log('Server received message:', msgStr, isBinary, true);
-                    // let isAck = ws.publish(ROOM, message, true, true);
-                    let isAck = ws.send(message, true, true);
+                    let isAck = ws.publish(ROOM, message, true, true);
+                    // let isAck = ws.send(message, true, true);
                     /* isAck is false if backpressure was built up, wait for drain */
                     logger.log('skt publish ACK:', isAck, message);
                     if (isAck) {
