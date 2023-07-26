@@ -32,7 +32,8 @@ class UWebSockets {
                 if (ws.getBufferedAmount() < MAX_BACKPRESSURE_LENGTH) {
                     const msgStr = ab2str(message);
                     logger.log('Server received message:', msgStr, isBinary, true);
-                    let isAck = ws.publish(ROOM, message, true, true);
+                    // let isAck = ws.publish(ROOM, message, true, true);
+                    let isAck = ws.send(message, true, true);
                     /* isAck is false if backpressure was built up, wait for drain */
                     logger.log('skt publish ACK:', isAck, message);
                     if (isAck) {
