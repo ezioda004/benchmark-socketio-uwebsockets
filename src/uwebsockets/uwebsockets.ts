@@ -8,7 +8,7 @@ function smallUuid(): string {
 const textDecoderInstance = new TextDecoder()
 
 let messageQueue: string[] = [];
-const MAX_MESSAGE_QUEUE_SIZE = 13;
+const MAX_MESSAGE_QUEUE_SIZE = 50;
 class UWebSockets {
     private app;
     private clients = new Array<number>();
