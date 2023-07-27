@@ -49,18 +49,19 @@ class UWebSockets {
             console.log("Listening to port 3000", listenSocket);
             setInterval(() => {
                 this.emit();
-            }, 1e3);
+            }, 1e3)
+            this.listenForMessage();
         });
 
-        redisClient.subscribeToChannel("room");
+        // redisClient.subscribeToChannel("room");
         
-        redisClient.addSubscribeEventListener((channel: string, message: any) => {
-            console.log("addSubscribeEventListener::message::channel", channel, message.message.length);
-            if (message.serverId === this.serverId) {
-                return;
-            }
-            this.app?.publish("room", message.message);
-        });
+        // redisClient.addSubscribeEventListener((channel: string, message: any) => {
+        //     console.log("addSubscribeEventListener::message::channel", channel, message.message.length);
+        //     if (message.serverId === this.serverId) {
+        //         return;
+        //     }
+        //     this.app?.publish("room", message.message);
+        // });
 
         // setInterval(() => {
         //     console.log("clients connected so far", this.clients.length);
@@ -78,9 +79,31 @@ class UWebSockets {
         console.log("broadcasting messages");
         for (const message of messageQueue) {           
             this.app.publish("room", message);
-            redisClient.publishToChannel("room", { message, serverId: this.serverId });
+            // redisClient.publishToChannel("room", { message, serverId: this.serverId });
+            redisClient.addToStream("room", message);
         }
         messageQueue = [];
+    }
+
+    async listenForMessage(channelId = "room", lastId = "$") {
+        const results = await redisClient.subClient.xread("BLOCK", 0, "STREAMS", channelId, lastId);
+        if (results) {
+            // `key` equals to "mystream"
+            const [key, messages] = results[0];
+            // console.log('redis stream message:', key, messages);
+            messages
+                .filter(msg => msg[1][0] != String(process.pid))
+                .forEach(msg => {
+                    // console.log('message from stream:', message);
+                    // this.emitToLocalRoom(ROOM, str2ab(msg[1][1]));
+                    this.app?.publish("room", msg[1][1]);
+                });
+
+            lastId = messages[messages.length - 1][0];
+        }
+        console.log("lastId:", lastId);
+        // Pass the last id of the results to the next round.
+        await this.listenForMessage(lastId);
     }
 }
 
