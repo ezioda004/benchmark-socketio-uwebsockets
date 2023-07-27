@@ -41,7 +41,6 @@ class RedisClient {
     public addSubscribeEventListener(cb: any) {
         this.subClient.on("message", (channel: string, _message) => {
             const message = JSON.parse(_message);
-            console.log(`addSubscribeEventListener::message::channel ${channel}`, message);
             cb(channel, message);
             
         });
