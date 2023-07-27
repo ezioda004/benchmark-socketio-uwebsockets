@@ -28,7 +28,7 @@ class ClientManager {
     totalConnections: number;
     totalDisConnections: number;
     online: number;
-    totalTransmittedMessages: number;
+    totalMessagesReceived: number;
     backPressureCount: number
     serverBackPressureCount: number
     streamEnteriesDeleted: number;
@@ -39,7 +39,7 @@ class ClientManager {
         this.totalConnections = 0;
         this.totalDisConnections = 0;
         this.online = 0;
-        this.totalTransmittedMessages = 0;
+        this.totalMessagesReceived = 0;
         this.backPressureCount = 0;
         this.serverBackPressureCount = 0;
         this.streamEnteriesDeleted = 0;
