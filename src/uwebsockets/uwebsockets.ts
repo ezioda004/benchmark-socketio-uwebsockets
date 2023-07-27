@@ -49,7 +49,7 @@ class UWebSockets {
             console.log("Listening to port 3000", listenSocket);
             setInterval(() => {
                 this.emit();
-            }, 1e3)
+            }, 1e3);
         });
 
         redisClient.subscribeToChannel("room");
