@@ -1,10 +1,11 @@
-import WebSocket from 'ws';
+import WebSocket, { RawData } from 'ws';
 import { nanoid } from 'nanoid'
 import { randomize } from '../util.js';
 
 import { Logger } from "../logger.js";
 const logger = Logger.getLogger("uskt.client");
 
+let messageId = 0;
 class WebSocketClient {
     socket: WebSocket;
     url: string;
@@ -15,24 +16,29 @@ class WebSocketClient {
         logger.log("WebSocketClient constructor", count);
         this.url = url;
         this.count = count;
-        this.id = count + "::" + nanoid();
+        this.id = count + ''; //+ "::" + nanoid();
         this.socket = new WebSocket(this.url);
         this.pingInterval = Date.now();
         this.addListeners();
     }
 
-    public sendToChannel(message: Buffer) {
+    public sendToChannel() {
         if (this.socket.readyState == WebSocket.OPEN) {
-            setInterval(() => {
-                this.socket.send(message);
-            }, randomize(2e3, 5e3));
+            let interval = setInterval(() => {
+                this.socket.send(this.getHelloMessageBuffer());
+                messageId++;
+                logger.log('sendToChannel clientid, messageId:', this.id, messageId);
+                if (messageId > 5) {
+                    clearInterval(interval);
+                }
+            }, randomize(1e3, 2e3));
         }
 
         // this.socket.send(message);
     }
 
     private getHelloMessageBuffer(): Buffer {
-        return Buffer.alloc(10, `clientid:${this.id}::messageId:${nanoid()}`);
+        return Buffer.from(`clientid:${this.id}::messageId:${messageId}`);
     }
 
     private addListeners() {
@@ -43,9 +49,9 @@ class WebSocketClient {
         this.socket.on("error", (skt: WebSocket, err: Error) => {
             logger.error(`socket error: ${this.id}, err:`, err);
         });
-
-        this.socket.on("message", (message: WebSocket, isBinary: WebSocket.RawData) => {
-            logger.log(`Received server message on: ${this.id}, isBinary: ${isBinary}`, message.toString());
+        
+        this.socket.on("message", (...args) => {
+            logger.log(`Received server message on: ${this.id}::`, args[0].toString(), args[1]);
         });
 
         this.socket.on("ping", (skt: WebSocket, data: Buffer) => {
@@ -64,7 +70,7 @@ class WebSocketClient {
 
         this.socket.on('open', () => {
             logger.log("client connection open: ", this.id);
-            this.sendToChannel(this.getHelloMessageBuffer());
+            this.sendToChannel();
         });
     }
 }
