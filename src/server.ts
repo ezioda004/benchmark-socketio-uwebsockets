@@ -26,18 +26,18 @@ async function startUWebSockets() {
 }
 
 async function main() {
-    const type = process.env.TYPE;
+    const type = "UWEBSOCKETS";
     console.log("main", type);
     let server: Awaited<ReturnType<typeof startSocketIO>> | Awaited<ReturnType<typeof startUWebSockets>>;
-    if (type === "SOCKETIO") {
-        server = await startSocketIO();
-    }
-    else if (type === "UWEBSOCKETS") {
+    // if (type === "SOCKETIO") {
+    //     server = await startSocketIO();
+    // }
+    // else if (type === "UWEBSOCKETS") {
         server = await startUWebSockets();
-    }
-    else {
-        throw new Error("Unknown type");
-    }
+    // }
+    // else {
+    //     throw new Error("Unknown type");
+    // }
 
     // const message = { // sample 1kb message
     //     type: 'message',
