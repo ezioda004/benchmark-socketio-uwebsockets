@@ -47,7 +47,7 @@ async function main() {
     setInterval(() => {
         console.log("broadcasting to all clients");
         server.emit(JSON.stringify(message));
-    }, 1000);
+    }, 5000);
 }
 
 main();

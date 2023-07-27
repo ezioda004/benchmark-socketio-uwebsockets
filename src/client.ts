@@ -8,7 +8,7 @@ function main() {
 
     const url = `wss://benchmarking.physicswallahlive.net`
 
-    for (let i = 0; i < 2000; i++) {
+    for (let i = 0; i < 1000; i++) {
         let client: WebSocketClient;
         const type = process.env.TYPE;
         // if (type === "SOCKETIO") {
