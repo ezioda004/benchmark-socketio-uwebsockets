@@ -25,11 +25,12 @@ function main() {
             console.log("got message from server", message.toString().length);
         });
 
-
-
-        setInterval(() => {
-            client.send("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis eros id nisi pellentesque sagittis. Nam eu velit faucibus, tempor neque at, volutpat mauris. Vestibulum tristique tortor vel ex tincidunt dignissim. Integer ultrices malesuada dolor, ut feugiat elit tristique in. Fusce mattis feugiat condimentum. Sed vel augue sit amet neque suscipit dictum. Duis semper, justo a malesuada feugiat, sem tortor cursus sem, sed tempus ligula enim et lacus. Quisque cursus vestibulum enim nec sollicitudin. Integer ac tellus ullamcorper, finibus risus in, vulputate neque. In euismod sem id gravida efficitur. Curabitur vel scelerisque neque. Vestibulum euismod rutrum tellus, vitae volutpat massa scelerisque ac. Donec egestas lectus sit amet est laoreet, eu scelerisque risus rutrum. Cras bibendum mi sed nisl ultrices auctor. Morbi vitae facilisis dolor, sit amet faucibus elit.");
-        }, getRandomTime());
+        client.socket.on("open", () => {
+            console.log("client connected");
+            setInterval(() => {
+                client.send("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis eros id nisi pellentesque sagittis. Nam eu velit faucibus, tempor neque at, volutpat mauris. Vestibulum tristique tortor vel ex tincidunt dignissim. Integer ultrices malesuada dolor, ut feugiat elit tristique in. Fusce mattis feugiat condimentum. Sed vel augue sit amet neque suscipit dictum. Duis semper, justo a malesuada feugiat, sem tortor cursus sem, sed tempus ligula enim et lacus. Quisque cursus vestibulum enim nec sollicitudin. Integer ac tellus ullamcorper, finibus risus in, vulputate neque. In euismod sem id gravida efficitur. Curabitur vel scelerisque neque. Vestibulum euismod rutrum tellus, vitae volutpat massa scelerisque ac. Donec egestas lectus sit amet est laoreet, eu scelerisque risus rutrum. Cras bibendum mi sed nisl ultrices auctor. Morbi vitae facilisis dolor, sit amet faucibus elit.");
+            }, getRandomTime());
+        });
     }
 }
 
