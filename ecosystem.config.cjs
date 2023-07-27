@@ -3,7 +3,7 @@ module.exports = {
         {
             name: 'server',
             script: './dist/server.js',
-            instances: 2,
+            instances: 4,
             env: {
                 PORT: 3000,
                 NODE_ENV: 'production',
@@ -13,7 +13,7 @@ module.exports = {
         {
             name: 'client',
             script: './dist/client.js',
-            instances: 1,
+            instances: 4,
             env: {
                 PORT: 3000,
                 NODE_ENV: 'production',
