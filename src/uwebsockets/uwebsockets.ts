@@ -7,13 +7,13 @@ function smallUuid(): string {
 
 const textDecoderInstance = new TextDecoder()
 
+let messageQueue: string[] = [];
+const MAX_MESSAGE_QUEUE_SIZE = 13;
 class UWebSockets {
     private app;
     private clients = new Array<number>();
     private serverId = smallUuid();
-
     constructor() {
-
         console.log("UWebSockets constructor");
         this.app = App().ws("/*", {
             /* Options */
@@ -32,7 +32,7 @@ class UWebSockets {
                 /* Ok is false if backpressure was built up, wait for drain */
                 // let ok = ws.send(message, isBinary);
                 const text = textDecoderInstance.decode(message);
-                this.emit(text);
+                this.pushToQueue(text);
             },
             drain: () => {
 
@@ -47,6 +47,9 @@ class UWebSockets {
 
         this.app.listen(3000, (listenSocket) => {
             console.log("Listening to port 3000", listenSocket);
+            setInterval(() => {
+                this.emit();
+            }, 1e3)
         });
 
         redisClient.subscribeToChannel("room");
@@ -64,9 +67,20 @@ class UWebSockets {
         // }, 1000);
     }
 
-    public emit<T>(message: string) {
-        this.app.publish("room", message);
-        redisClient.publishToChannel("room", { message, serverId: this.serverId });
+    public pushToQueue(message:string) {
+        if (messageQueue.length < MAX_MESSAGE_QUEUE_SIZE) {
+            messageQueue.push(message);
+        }
+    }
+
+    public emit<T>() {
+        for (const message of messageQueue) {
+            messageQueue.forEach(message => {
+                this.app.publish("room", message);
+                redisClient.publishToChannel("room", { message, serverId: this.serverId });
+            });                
+        }
+        messageQueue = [];
     }
 }
 
