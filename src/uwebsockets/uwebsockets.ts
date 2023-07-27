@@ -86,9 +86,9 @@ class UWebSockets {
     public emitToLocalRoom(room: string, message: ArrayBuffer) {
         let isAck = this.app.publish(room, message);
         logger.log('server sent message status:', message, isAck);
-        if (!isAck) {
-            ++clientManager.serverBackPressureCount;
-        }
+        // if (!isAck) {
+        //     ++clientManager.serverBackPressureCount;
+        // }
     }
 
     private trimStrim() {
