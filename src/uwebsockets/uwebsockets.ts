@@ -108,6 +108,7 @@ class UWebSockets {
     }
 
     publishToRedisStream(room: string, message: ArrayBuffer) {
+        logger.log('publish check');
         redis.xadd(room, "*", process.pid, Buffer.from(message), (err, id) => {
             if (err) logger.error('xadd err:', err);
             logger.log(`xadd id: ${id}`);
