@@ -1,17 +1,26 @@
-import { App } from "uwebsockets.js";
+import { App, WebSocket } from "uwebsockets.js";
+import { redisClient } from "../redis/redisClient.js";
 
+function smallUuid(): string {
+    return Math.random().toString(36).substring(2);
+}
+
+const textDecoderInstance = new TextDecoder()
 
 class UWebSockets {
     private app;
     private clients = new Array<number>();
-    
+    private serverId = smallUuid();
+
     constructor() {
+
         console.log("UWebSockets constructor");
         this.app = App().ws("/*", {
             /* Options */
             compression: 0,
             maxPayloadLength: 16 * 1024 * 1024,
             idleTimeout: 10,
+            closeOnBackpressureLimit: 1, // drop connection when backpressure is achieved
             /* Handlers */
             open: (ws) => {
                 this.clients.push(1);
@@ -19,8 +28,14 @@ class UWebSockets {
                 ws.subscribe("room");
             },
             message: (ws, message, isBinary) => {
+                console.log("Got a message!", message, isBinary);
                 /* Ok is false if backpressure was built up, wait for drain */
-                let ok = ws.send(message, isBinary);
+                // let ok = ws.send(message, isBinary);
+                const text = textDecoderInstance.decode(message);
+                this.emit(ws, text);
+            },
+            drain: () => {
+
             },
             close: (ws, code, message) => {
                 this.clients.pop();
@@ -34,13 +49,24 @@ class UWebSockets {
             console.log("Listening to port 3000", listenSocket);
         });
 
-        setInterval(() => {
-            console.log("clients connected so far", this.clients.length);
-        }, 1000);
+        redisClient.subscribeToChannel("room");
+        
+        redisClient.addSubscribeEventListener((channel: string, message: any) => {
+            console.log("addSubscribeEventListener::message::channel", channel, message);
+            if (message.serverId === this.serverId) {
+                return;
+            }
+            this.app?.publish("room", message.message);
+        });
+
+        // setInterval(() => {
+        //     console.log("clients connected so far", this.clients.length);
+        // }, 1000);
     }
 
-    public emit(message: string) {
-        this.app.publish("room", message);
+    public emit<T>(ws: WebSocket<T>, message: string) {
+        ws.publish("room", message);
+        redisClient.publishToChannel("room", { message, serverId: this.serverId });
     }
 }
 
