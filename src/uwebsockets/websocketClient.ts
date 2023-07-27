@@ -1,6 +1,6 @@
 import WebSocket, { RawData } from 'ws';
 import { nanoid } from 'nanoid'
-import { randomize } from '../util.js';
+import { delay, randomize } from '../util.js';
 
 import { Logger } from "../logger.js";
 const logger = Logger.getLogger("uskt.client");
@@ -22,16 +22,23 @@ class WebSocketClient {
         this.addListeners();
     }
 
-    public sendToChannel() {
+    public async sendToChannel() {
         if (this.socket.readyState == WebSocket.OPEN) {
-            let interval = setInterval(() => {
-                this.socket.send(this.getHelloMessageBuffer());
+            for (let i = 0; ; i++) {
                 messageId++;
+                this.socket.send(this.getHelloMessageBuffer());
                 logger.log('sendToChannel clientid, messageId:', this.id, messageId);
-                if (messageId > 5) {
-                    clearInterval(interval);
-                }
-            }, randomize(1e3, 2e3));
+                await delay(9e3, 10e3);
+            }
+            // let interval = setInterval(() => {
+            //     this.socket.send(this.getHelloMessageBuffer());
+            //     messageId++;
+            //     logger.log('sendToChannel clientid, messageId:', this.id, messageId);
+            //     if (messageId > 5) {
+            //         logger.log('calling clearInterval');
+            //         clearInterval(interval);
+            //     }
+            // }, randomize(5e3, 10e3));
         }
 
         // this.socket.send(message);

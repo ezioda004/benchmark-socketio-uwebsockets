@@ -15,3 +15,9 @@ export function str2ab(text: string) {
 export function isMasterProcess() {
     return !process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === "0";
 }
+
+export function delay(min: number, max: number) {
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, randomize(min, max), true);
+    });
+}
