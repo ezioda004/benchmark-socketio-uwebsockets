@@ -2,6 +2,7 @@ import { SocketIO } from "./socketio/socketio.js";
 import express from "express";
 import { createServer } from "http";
 import { UWebSockets } from "./uwebsockets/uwebsockets.js";
+import { redisClient } from "./redis/redisClient.js";
 
 
 
@@ -26,7 +27,8 @@ async function startUWebSockets() {
 }
 
 async function main() {
-    const type = "UWEBSOCKETS";
+    const type = process.env.TYPE;
+    redisClient.pubClient.del("room", console.log);
     console.log("main", type);
     let server: Awaited<ReturnType<typeof startSocketIO>> | Awaited<ReturnType<typeof startUWebSockets>>;
     // if (type === "SOCKETIO") {
