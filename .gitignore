@@ -3,3 +3,7 @@
 /dist
 
 dump.rdb
+
+.clinic
+*.html
+*-v8.log
