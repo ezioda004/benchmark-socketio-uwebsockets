@@ -19,7 +19,7 @@ class UWebSockets {
             compression: SHARED_COMPRESSOR,
             maxPayloadLength: 16 * 1024,
             idleTimeout: 60, // 1 min
-            closeOnBackpressureLimit: 0, // true
+            closeOnBackpressureLimit: 1, // true
             sendPingsAutomatically: true,
             maxBackpressure: MAX_BACKPRESSURE_LENGTH,
             /* Handlers */
@@ -30,27 +30,33 @@ class UWebSockets {
                 logger.log('client subscribed:', isSubscribed);
             },
             message: (ws, message, isBinary) => {
-                if (ws.getBufferedAmount() < MAX_BACKPRESSURE_LENGTH) {
-                    const msgStr = ab2str(message);
-                    logger.log('Server received message:', msgStr, isBinary, true);
-                    let isAck = ws.publish(ROOM, message, true, true);
-                    // let isAck = ws.send(message, true, true);
-                    /* isAck is false if backpressure was built up, wait for drain */
-                    logger.log('skt publish ACK:', isAck, message);
-                    if (isAck) {
-                        // publish to redis only if it is published in local room?
-                        this.publishToRedisStream(ROOM, message);
-                    } else {
-                        // todo: handle backpressure
-                        ++clientManager.backPressureCount;
-                    }
-                } else {
-                    clientManager.addSktsWaitingOnBackPressure(ws);
-                }
+                const msgStr = ab2str(message);
+                logger.log('Server received message:', msgStr, isBinary, true);
+                let isAck = ws.publish(ROOM, message);
+                logger.log('skt publish ACK:', isAck, message);
+                this.publishToRedisStream(ROOM, message);
+                
+                // if (ws.getBufferedAmount() < MAX_BACKPRESSURE_LENGTH) {
+                //     const msgStr = ab2str(message);
+                //     logger.log('Server received message:', msgStr, isBinary, true);
+                //     let isAck = ws.publish(ROOM, message, true, true);
+                //     // let isAck = ws.send(message, true, true);
+                //     /* isAck is false if backpressure was built up, wait for drain */
+                //     logger.log('skt publish ACK:', isAck, message);
+                //     if (isAck) {
+                //         // publish to redis only if it is published in local room?
+                //         this.publishToRedisStream(ROOM, message);
+                //     } else {
+                //         // todo: handle backpressure
+                //         ++clientManager.backPressureCount;
+                //     }
+                // } else {
+                //     clientManager.addSktsWaitingOnBackPressure(ws);
+                // }
             },
-            drain: (ws) => {
-                clientManager.removeSktsWaitingOnBackPressure(ws);
-            },
+            // drain: (ws) => {
+            //     clientManager.removeSktsWaitingOnBackPressure(ws);
+            // },
             close: (ws, code, message) => {
                 clientManager.disconnect();
                 logger.log("WebSocket closed:", ws, code, ab2str(message));
@@ -78,7 +84,7 @@ class UWebSockets {
     }
 
     public emitToLocalRoom(room: string, message: ArrayBuffer) {
-        let isAck = this.app.publish(room, message, true, true);
+        let isAck = this.app.publish(room, message);
         logger.log('server sent message status:', message, isAck);
         if (!isAck) {
             ++clientManager.serverBackPressureCount;
@@ -89,6 +95,7 @@ class UWebSockets {
         redis.xlen(ROOM, (err, len) => {
             if (err) logger.error("xlen error:", err);
             else {
+                logger.log("current stream len:", len);
                 clientManager.totalTransmittedMessages = len!;
                 redis.xtrim(ROOM, "MAXLEN", "~", 24e3, (err, enteriesDeleted) => {
                     if (err) logger.error("xtrim error:", err);
@@ -112,7 +119,6 @@ class UWebSockets {
         // Because we only listen to one key (mystream) here, `results` only contains
         // a single element. See more: https://redis.io/commands/xread#return-value
         const results = await streamSubscriber.xread("BLOCK", 0, "STREAMS", ROOM, lastId);
-        // const results = await streamSubscriber.xread("block", 0, "STREAMS", "mystream", lastId);
         if (results) {
             // `key` equals to "mystream"
             const [key, messages] = results[0];
@@ -126,6 +132,7 @@ class UWebSockets {
 
             lastId = messages[messages.length - 1][0];
         }
+        logger.log("lastId:", lastId);
         // Pass the last id of the results to the next round.
         await this.listenForMessage(lastId);
     }
