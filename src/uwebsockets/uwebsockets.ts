@@ -96,7 +96,7 @@ class UWebSockets {
             if (err) logger.error("xlen error:", err);
             else {
                 logger.log("current stream len:", len);
-                clientManager.totalTransmittedMessages = len!;
+                clientManager.totalMessagesReceived += len!;
                 redis.xtrim(ROOM, "MAXLEN", "~", 24e3, (err, enteriesDeleted) => {
                     if (err) logger.error("xtrim error:", err);
                     else {
