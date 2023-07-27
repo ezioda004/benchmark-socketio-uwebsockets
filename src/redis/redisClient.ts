@@ -93,6 +93,13 @@ class RedisClient {
         });
     }
 
+    public addToStream(channelId: string, message: any) {
+        this.pubClient.xadd(channelId, "*", process.pid, message, (err, id) => {
+            if (err) console.error('xadd err:', err);
+            console.log(`xadd id: ${id}`);
+        });
+    }
+
     public async close() {
         this.pubClient.disconnect();
         this.subClient.disconnect();
