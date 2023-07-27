@@ -53,3 +53,16 @@ async function main() {
 }
 
 main();
+
+['unhandledRejection', 'uncaughtException'].forEach((type) => {
+    process.on(type, (reason) => {
+        console.error(`${type} at:`, reason.stack || reason);
+    });
+});
+
+['SIGTERM', 'SIGINT'].forEach((type) => {
+    process.once(type, () => {
+        console.error(`Got ${type} signal`);
+        process.exit(0);
+    });
+});
