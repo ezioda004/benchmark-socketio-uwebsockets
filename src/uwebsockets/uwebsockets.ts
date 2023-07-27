@@ -32,7 +32,7 @@ class UWebSockets {
                 /* Ok is false if backpressure was built up, wait for drain */
                 // let ok = ws.send(message, isBinary);
                 const text = textDecoderInstance.decode(message);
-                this.emit(ws, text);
+                this.emit(text);
             },
             drain: () => {
 
@@ -64,8 +64,8 @@ class UWebSockets {
         // }, 1000);
     }
 
-    public emit<T>(ws: WebSocket<T>, message: string) {
-        ws.publish("room", message);
+    public emit<T>(message: string) {
+        this.app.publish("room", message);
         redisClient.publishToChannel("room", { message, serverId: this.serverId });
     }
 }

@@ -25,10 +25,10 @@ function main() {
             console.log("got message from server", message.toString());
         });
 
-        setTimeout(() => {
-            // console.log("")
-            client.send("hello");
-        }, 5000);
+        // setTimeout(() => {
+        //     // console.log("")
+        //     client.send("hello");
+        // }, 5000);
     }
 }
 
