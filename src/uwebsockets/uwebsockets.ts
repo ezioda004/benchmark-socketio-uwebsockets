@@ -69,16 +69,16 @@ class UWebSockets {
 
     public pushToQueue(message:string) {
         if (messageQueue.length < MAX_MESSAGE_QUEUE_SIZE) {
+            console.log("pushed message:", messageQueue.length);
             messageQueue.push(message);
         }
     }
 
     public emit<T>() {
-        for (const message of messageQueue) {
-            messageQueue.forEach(message => {
-                this.app.publish("room", message);
-                redisClient.publishToChannel("room", { message, serverId: this.serverId });
-            });                
+        console.log("broadcasting messages");
+        for (const message of messageQueue) {           
+            this.app.publish("room", message);
+            redisClient.publishToChannel("room", { message, serverId: this.serverId });
         }
         messageQueue = [];
     }
