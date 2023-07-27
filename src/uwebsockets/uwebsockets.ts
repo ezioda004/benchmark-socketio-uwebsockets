@@ -52,7 +52,7 @@ class UWebSockets {
         redisClient.subscribeToChannel("room");
         
         redisClient.addSubscribeEventListener((channel: string, message: any) => {
-            console.log("addSubscribeEventListener::message::channel", channel, message);
+            console.log("addSubscribeEventListener::message::channel", channel, message.length);
             if (message.serverId === this.serverId) {
                 return;
             }
