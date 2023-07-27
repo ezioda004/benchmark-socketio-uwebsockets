@@ -6,9 +6,9 @@ function main() {
     console.log("main");
     console.log("process.env.PORT", process.env.PORT);
 
-    const url = `ws://localhost:${process.env.PORT}`
+    const url = `wss://benchmarking.physicswallahlive.net`
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 2000; i++) {
         let client: WebSocketClient;
         const type = process.env.TYPE;
         // if (type === "SOCKETIO") {
