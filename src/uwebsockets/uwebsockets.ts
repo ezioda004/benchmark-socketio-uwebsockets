@@ -1,11 +1,12 @@
-import { App, WebSocket } from "uwebsockets.js";
+import { App, WebSocket, SHARED_COMPRESSOR } from "uwebsockets.js";
 import { redisClient } from "../redis/redisClient.js";
 
 function smallUuid(): string {
     return Math.random().toString(36).substring(2);
 }
 
-const textDecoderInstance = new TextDecoder()
+const textDecoderInstance = new TextDecoder();
+const textEncoderInstance = new TextEncoder();
 
 let messageQueue: string[] = [];
 const MAX_MESSAGE_QUEUE_SIZE = 25;
@@ -17,9 +18,11 @@ class UWebSockets {
         console.log("UWebSockets constructor");
         this.app = App().ws("/*", {
             /* Options */
-            compression: 0,
+            compression: SHARED_COMPRESSOR,
             maxPayloadLength: 16 * 1024 * 1024,
             idleTimeout: 10,
+            sendPingsAutomatically: true,
+            maxBackpressure: 64 * 1024, // default value,
             closeOnBackpressureLimit: 1, // drop connection when backpressure is achieved
             /* Handlers */
             open: (ws) => {
@@ -96,7 +99,8 @@ class UWebSockets {
                 .forEach(msg => {
                     // console.log('message from stream:', message);
                     // this.emitToLocalRoom(ROOM, str2ab(msg[1][1]));
-                    this.app?.publish("room", msg[1][1]);
+                    // INFO: publish binary message to 
+                    this.app?.publish("room", textEncoderInstance.encode(msg[1][1]));
                 });
 
             lastId = messages[messages.length - 1][0];
