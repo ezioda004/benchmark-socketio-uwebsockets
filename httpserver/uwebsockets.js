@@ -10,7 +10,7 @@ App()
 
   /* It does Http as well */
   res.writeStatus('200 OK').writeHeader('IsExample', 'Yes')
-  .end('hello world');
+  .end(Buffer.alloc(2048, 'hello world').toString());
   // .end(Buffer.alloc(2048, 'hello world').toString());
   
 }).listen(PORT, (listenSocket) => {
