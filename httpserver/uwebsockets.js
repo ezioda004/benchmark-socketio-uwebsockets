@@ -16,7 +16,7 @@ App()
 }).listen(PORT, (listenSocket) => {
 
   if (listenSocket) {
-    console.log('Listening to port 9001');
+    console.log(`Listening to port ${PORT}`);
   }
   
 });
