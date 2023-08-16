@@ -7,9 +7,9 @@ function main() {
     console.log("process.env.PORT", process.env.PORT);
     // const socketClient = new SocketClient();
 
-    const url = `wss://benchmarking.vedantu.com`
-
-    for (let i = 0; i < 2500; i++) {
+    for (let i = 0; i < 10; i++) {
+        const userId = Math.floor(Math.random() * 1000000000);
+        const url = `wss://live-be.physicswallahlive.net/ws?sessionId=64cb7ce172e916150dbe407f&sessionRole=STUDENT&fullName=sst&userId=${userId}`
         let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE;
         if (type === "SOCKETIO") {

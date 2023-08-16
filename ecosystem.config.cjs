@@ -12,7 +12,7 @@ module.exports = {
         {
             name: 'client',
             script: './dist/client.js',
-            instances: 4,
+            instances: 1,
             env: {
                 PORT: 3000,
                 NODE_ENV: 'production',
