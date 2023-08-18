@@ -43,9 +43,9 @@ class UWebSockets {
                     res.writeStatus("200 OK").end("Ok");
                 }
             });
-            // res.onAborted(() => {
-            //     res.writeStatus("200 OK").end();
-            // });
+            res.onAborted(() => {
+                res.writeStatus("200 OK").end();
+            });
         })
             .any("/*", (res, req) => {
                 res.end("Nothing to see here!");
