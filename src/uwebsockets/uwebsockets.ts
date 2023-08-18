@@ -31,13 +31,14 @@ class UWebSockets {
         }).post("/api/collect", (res, req) => {
             res.onData((chunk, isLast) => {
                 const body = this.handleBuffer(chunk);
+                console.log("body", body);
                 const objToSave: Array<{mId: string, cIds: Array<string>, sessionId: string}> = JSON.parse(body);
-                console.log("body", objToSave);
-                for (let i = 0; i < objToSave.length; i++) {
-                    const { mId, cIds, sessionId } = objToSave[i];
-                    mongoClient.findAndUpsert({ mId }, { "$push": { cIds: { "$each": cIds } }, "$set": { mId, sessionId }});
-                }
+                console.log("objToSave", objToSave);
                 if (isLast) {
+                    for (let i = 0; i < objToSave.length; i++) {
+                        const { mId, cIds, sessionId } = objToSave[i];
+                        mongoClient.findAndUpsert({ mId }, { "$push": { cIds: { "$each": cIds } }, "$set": { mId, sessionId }});
+                    }
                     res.writeStatus("200 OK").end("Ok");
                 }
             });
