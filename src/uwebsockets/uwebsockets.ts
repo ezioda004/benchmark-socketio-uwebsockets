@@ -1,9 +1,11 @@
 import { App } from "uwebsockets.js";
+import { mongoClient } from "../modules/mongo.js";
 
 
 class UWebSockets {
     private app;
     private clients = new Array<number>();
+    private decoder = new TextDecoder();
     
     constructor() {
         console.log("UWebSockets constructor");
@@ -26,7 +28,24 @@ class UWebSockets {
                 this.clients.pop();
                 console.log("WebSocket closed")
             }
-        }).any("/*", (res, req) => {
+        }).post("/api/collect", (res, req) => {
+            res.onData((chunk, isLast) => {
+                const body = this.handleBuffer(chunk);
+                const objToSave: Array<{mId: string, cIds: Array<string>, sessionId: string}> = JSON.parse(body);
+                console.log("body", objToSave);
+                for (let i = 0; i < objToSave.length; i++) {
+                    const { mId, cIds, sessionId } = objToSave[i];
+                    mongoClient.findAndUpsert({ mId }, { "$push": { cIds: { "$each": cIds } }, "$set": { mId, sessionId }});
+                }
+                if (isLast) {
+                    res.writeStatus("200 OK").end("Ok");
+                }
+            });
+            res.onAborted(() => {
+                res.writeStatus("200 OK").end();
+            });
+        })
+        .any("/*", (res, req) => {
             res.end("Nothing to see here!");
         });
 
@@ -36,12 +55,16 @@ class UWebSockets {
 
         setInterval(() => {
             console.log("clients connected so far", this.clients.length);
-        }, 1000);
+        }, 5000);
+    }
+
+    handleBuffer(buffer: ArrayBuffer) {
+        return this.decoder.decode(buffer);
     }
 
     public emit(message: string) {
         this.app.publish("room", message);
     }
-}
+};
 
 export { UWebSockets };
