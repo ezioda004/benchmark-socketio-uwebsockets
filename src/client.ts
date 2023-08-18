@@ -12,7 +12,7 @@ function main() {
     const clients = new Map<string, SocketClient | WebSocketClient>();
     
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 2500; i++) {
         const userId = Math.floor(Math.random() * 1000000000);
         // const host = "ws://localhost:8080"; 
         const host = "wss://live-be.physicswallahlive.net";
