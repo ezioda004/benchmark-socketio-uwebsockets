@@ -30,9 +30,10 @@ class UWebSockets {
             }
         }).post("/api/collect", (res, req) => {
             console.log("got request");
+            let body = "";
             res.onData((chunk, isLast) => {
+                body += this.handleBuffer(chunk);
                 if (isLast) {
-                    const body = this.handleBuffer(chunk);
                     console.log("body", body, isLast);
                     const objToSave: Array<{ mId: string, cIds: Array<string>, sessionId: string }> = JSON.parse(body);
                     console.log("objToSave", objToSave);
