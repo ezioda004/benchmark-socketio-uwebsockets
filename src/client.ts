@@ -67,6 +67,7 @@ function flushAckBuffer() {
         const { mId, cIds, sessionId } = ackBuffer[key];
         arr.push({ mId, cIds, sessionId });
     });
+    if (arr.length === 0) return;
     ackBuffer = {};
     // const url = "http://localhost:3000/api/collect";
     const url = "https://benchmarking.physicswallahlive.net/api/collect";
