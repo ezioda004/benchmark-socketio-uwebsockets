@@ -6,7 +6,7 @@ class UWebSockets {
     private app;
     private clients = new Array<number>();
     private decoder = new TextDecoder();
-    
+
     constructor() {
         console.log("UWebSockets constructor");
         this.app = App().ws("/*", {
@@ -30,14 +30,14 @@ class UWebSockets {
             }
         }).post("/api/collect", (res, req) => {
             res.onData((chunk, isLast) => {
-                const body = this.handleBuffer(chunk);
-                console.log("body", body);
-                const objToSave: Array<{mId: string, cIds: Array<string>, sessionId: string}> = JSON.parse(body);
-                console.log("objToSave", objToSave);
                 if (isLast) {
+                    const body = this.handleBuffer(chunk);
+                    console.log("body", body);
+                    const objToSave: Array<{ mId: string, cIds: Array<string>, sessionId: string }> = JSON.parse(body);
+                    console.log("objToSave", objToSave);
                     for (let i = 0; i < objToSave.length; i++) {
                         const { mId, cIds, sessionId } = objToSave[i];
-                        mongoClient.findAndUpsert({ mId }, { "$push": { cIds: { "$each": cIds } }, "$set": { mId, sessionId }});
+                        mongoClient.findAndUpsert({ mId }, { "$push": { cIds: { "$each": cIds } }, "$set": { mId, sessionId } });
                     }
                     res.writeStatus("200 OK").end("Ok");
                 }
@@ -46,9 +46,9 @@ class UWebSockets {
                 res.writeStatus("200 OK").end();
             });
         })
-        .any("/*", (res, req) => {
-            res.end("Nothing to see here!");
-        });
+            .any("/*", (res, req) => {
+                res.end("Nothing to see here!");
+            });
 
         this.app.listen(3000, (listenSocket) => {
             console.log("Listening to port 3000", listenSocket);
