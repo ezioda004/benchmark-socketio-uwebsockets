@@ -29,10 +29,11 @@ class UWebSockets {
                 console.log("WebSocket closed")
             }
         }).post("/api/collect", (res, req) => {
+            console.log("got request");
             res.onData((chunk, isLast) => {
                 if (isLast) {
                     const body = this.handleBuffer(chunk);
-                    console.log("body", body);
+                    console.log("body", body, isLast);
                     const objToSave: Array<{ mId: string, cIds: Array<string>, sessionId: string }> = JSON.parse(body);
                     console.log("objToSave", objToSave);
                     for (let i = 0; i < objToSave.length; i++) {
@@ -42,9 +43,9 @@ class UWebSockets {
                     res.writeStatus("200 OK").end("Ok");
                 }
             });
-            res.onAborted(() => {
-                res.writeStatus("200 OK").end();
-            });
+            // res.onAborted(() => {
+            //     res.writeStatus("200 OK").end();
+            // });
         })
             .any("/*", (res, req) => {
                 res.end("Nothing to see here!");
