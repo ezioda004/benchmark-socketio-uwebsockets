@@ -12,11 +12,11 @@ function main() {
     const clients = new Map<string, SocketClient | WebSocketClient>();
     
 
-    for (let i = 0; i < 2500; i++) {
+    for (let i = 0; i < 1; i++) {
         const userId = Math.floor(Math.random() * 1000000000);
         // const host = "ws://localhost:8080"; 
-        const host = "wss://live-be.physicswallahlive.net";
-        const url = `${host}/ws?sessionId=64cb7ce172e916150dbe407f&sessionRole=STUDENT&fullName=sst&userId=${userId}`
+        const host = "wss://lt-1-stage-api.penpencil.co/pw-live-class/ws";
+        const url = `${host}?context=poll&scheduleId=123&${userId}`
         let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE;
         if (type === "SOCKETIO") {
