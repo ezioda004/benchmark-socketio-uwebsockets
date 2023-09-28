@@ -39,7 +39,12 @@ class UWebSockets {
                     console.log("objToSave", objToSave);
                     for (let i = 0; i < objToSave.length; i++) {
                         const { mId, cIds, sessionId } = objToSave[i];
-                        mongoClient.findAndUpsert({ mId }, { "$push": { cIds: { "$each": cIds } }, "$set": { mId, sessionId }, "$setOnInsert": { serverTime: new Date() } });
+                        mongoClient.findAndUpsert({ mId }, { 
+                            // "$push": { cIds: { "$each": cIds } }, 
+                            "inc": { "cIds": cIds.length },
+                            "$set": { mId }, 
+                            "$setOnInsert": { serverTime: new Date() } 
+                        });
                     }
                     res.writeStatus("200 OK").end("Ok");
                 }
