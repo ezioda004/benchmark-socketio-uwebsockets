@@ -41,8 +41,8 @@ class UWebSockets {
                         const { mId, cIds, sessionId } = objToSave[i];
                         mongoClient.findAndUpsert({ mId }, { 
                             // "$push": { cIds: { "$each": cIds } }, 
-                            "inc": { "cIds": cIds.length },
                             "$set": { mId }, 
+                            "$inc": { "cIds": cIds.length },
                             "$setOnInsert": { serverTime: new Date() } 
                         });
                     }
