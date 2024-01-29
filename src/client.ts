@@ -15,7 +15,7 @@ function main() {
     for (let i = 0; i < 2500; i++) {
         const userId = Math.floor(Math.random() * 1000000000);
         // const host = "ws://localhost:8080"; 
-        const host = "wss://lt-1-stage-api.penpencil.co/pw-live-class/ws";
+        const host = "wss://central-socket-service-stage.penpencil.co/central-socket/ws";
         const url = `${host}?context=poll&scheduleId=123&${userId}`
         let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE;
@@ -32,7 +32,7 @@ function main() {
         let clientId = "";
 
         client.socket.on("message", (_message: Buffer) => {
-            console.log("got message from server", _message);
+            console.log("got message from server", clientId, _message);
             const [context, ...messageObj] = _message.toString().split(' ');
             const message = JSON.parse(messageObj.join(' '))
             if (context === "connected") {
@@ -47,8 +47,6 @@ function main() {
                     ackBuffer[message.mId] = { mId: message.mId, cIds: [clientId], sessionId: message.sessionId };
                 }
             }
-            console.log("got message from server", message);
-
         });
     }
 
