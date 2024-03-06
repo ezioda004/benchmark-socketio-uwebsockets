@@ -3,7 +3,7 @@ import { SocketClient } from "./socketio/socketioClient.js"
 
 let ackBuffer: { [key: string]: { mIds: Array<string>, cId: string, scheduleId: string } } = {};
 
-const scheduleId = "65e56a8c6aab4515eafc0d8a";
+const scheduleId = "65e8182c4aea9723a926d829";
 
 function main() {
     console.log("main");
@@ -73,7 +73,7 @@ function main() {
             const clientId = clientIdsArr[i];
             const client = clients.get(clientId);
             if (!client) continue;
-            fetchWhiteboardData(client, 1709491329075, Date.now(), getRandomFromSlideChange());
+            fetchWhiteboardData(client, 1709709439690, Date.now(), getRandomFromSlideChange());
         }
     }
 
