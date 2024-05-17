@@ -16,7 +16,7 @@ function main() {
         const userId = Math.floor(Math.random() * 1000000000);
         // const host = "ws://localhost:8080/central-socket/ws"; 
         const host = "wss://lt-1-central-socket.penpencil.co/central-socket/ws";
-        const url = `${host}?roomContext=poll&scheduleId=123&${userId}`
+        const url = `${host}?roomContext=poll&scheduleId=66470afbbdf342760a7950b7&${userId}`
         let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE;
         if (type === "SOCKETIO") {
