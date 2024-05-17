@@ -1,7 +1,7 @@
 import { WebSocketClient } from "./uwebsockets/websocketClient.js";
 import { SocketClient } from "./socketio/socketioClient.js"
 
-let ackBuffer: { [key: string]: { mId: string, cIds: Array<string>, sessionId: string }} = {};
+let ackBuffer: { [key: string]: { mId: string, cIds: Set<string>, sessionId: string }} = {};
 
 
 function main() {
@@ -14,9 +14,9 @@ function main() {
 
     for (let i = 0; i < 2500; i++) {
         const userId = Math.floor(Math.random() * 1000000000);
-        // const host = "ws://localhost:8080"; 
-        const host = "wss://lt-1-stage-api.penpencil.co/pw-live-class/ws";
-        const url = `${host}?context=poll&scheduleId=123&${userId}`
+        // const host = "ws://localhost:8080/central-socket/ws"; 
+        const host = "wss://lt-1-central-socket.penpencil.co/central-socket/ws";
+        const url = `${host}?roomContext=poll&scheduleId=123&${userId}`
         let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE;
         if (type === "SOCKETIO") {
@@ -41,10 +41,12 @@ function main() {
             }
             else {
                 if (ackBuffer[message.mId]) {
-                    ackBuffer[message.mId].cIds.push(clientId);
+                    ackBuffer[message.mId].cIds.add(clientId);
                 }
                 else {
-                    ackBuffer[message.mId] = { mId: message.mId, cIds: [clientId], sessionId: message.sessionId };
+                    const cIds = new Set<string>();
+                    cIds.add(clientId)
+                    ackBuffer[message.mId] = { mId: message.mId, cIds: cIds, sessionId: message.sessionId };
                 }
             }
             console.log("got message from server", message);
@@ -65,7 +67,7 @@ function flushAckBuffer() {
     const arr: any = [];
     keys.forEach((key) => {
         const { mId, cIds, sessionId } = ackBuffer[key];
-        arr.push({ mId, cIds, sessionId });
+        arr.push({ mId, cIds: cIds.size, sessionId });
     });
     if (arr.length === 0) return;
     ackBuffer = {};
