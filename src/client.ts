@@ -37,7 +37,7 @@ async function main() {
         // const host = "ws://localhost:8080/central-socket/ws"; 
         // const host = "ws://localhost:8080/pw-live-class/ws";
         const host = "wss://live-class-ws-stage.penpencil.co/pw-live-class/ws";
-        const url = `${host}?context=premium_cohort&scheduleId=67ed0511ba691752f78d3237&parentScheduleId=67ed0511ba691752f78d3237&sessionRole=STUDENT&micEnabled=false&cameraEnabled=false&isMultiSchedule=false&token=${usersData[i].token}&fullName=${randomFullName}&useQueryFullName=true`
+        const url = `${host}?context=premium_cohort&scheduleId=67ed0a012bb374e5f1a76450&parentScheduleId=67ed0a012bb374e5f1a76450&sessionRole=STUDENT&micEnabled=false&cameraEnabled=false&isMultiSchedule=false&token=${usersData[i].token}&fullName=${randomFullName}&useQueryFullName=true`
         let client: SocketClient | WebSocketClient;
         const type = process.env.TYPE ?? "UWEBSOCKETS";
         if (type === "SOCKETIO") {
