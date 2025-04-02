@@ -26,6 +26,9 @@ async function main() {
 
 
     const clients = new Map<string, SocketClient | WebSocketClient>();
+
+    //sleep between 0 to 30 seconds
+    await sleep(Math.floor(Math.random() * 30000));
     
     const multipler = 350 * Number(process.env.pm_id);
     for (let i = multipler; i < (multipler + multipler); i++) {
@@ -77,6 +80,12 @@ async function main() {
     //     console.log("ackBuffer", ackBuffer);
     //     flushAckBuffer();
     // }, 5000);
+}
+
+function sleep(ms: number) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 }
 
 
