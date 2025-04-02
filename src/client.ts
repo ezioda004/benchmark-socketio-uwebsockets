@@ -2,7 +2,7 @@ import { WebSocketClient } from "./uwebsockets/websocketClient.js";
 import { SocketClient } from "./socketio/socketioClient.js"
 import fs from "fs/promises";
 
-
+console.log(process.env.pm_id, "pm2");
 
 
 let ackBuffer: { [key: string]: { mId: string, cIds: Set<string>, sessionId: string }} = {};
@@ -27,8 +27,8 @@ async function main() {
 
     const clients = new Map<string, SocketClient | WebSocketClient>();
     
-
-    for (let i = 0; i < 2; i++) {
+    const multipler = 350 * Number(process.env.pm_id);
+    for (let i = multipler; i < (multipler + multipler); i++) {
         const userId = Math.floor(Math.random() * 1000000000);
         const randomFullName = Math.random().toString(36).substring(2, 15);
         // const host = "ws://localhost:8080/central-socket/ws"; 
@@ -50,7 +50,7 @@ async function main() {
         let clientId = "";
 
         client.socket.on("message", (_message: Buffer) => {
-            console.log("got message from server", _message);
+            // console.log("got message from server", _message);
             const [context, ...messageObj] = _message.toString().split(' ');
             const message = JSON.parse(messageObj.join(' '))
             if (context === "connected") {
@@ -67,7 +67,7 @@ async function main() {
                     ackBuffer[message.mId] = { mId: message.mId, cIds: cIds, sessionId: message.sessionId };
                 }
             }
-            console.log("got message from server", message);
+            // console.log("got message from server", message);
 
         });
     }
