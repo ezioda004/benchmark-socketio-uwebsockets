@@ -1,24 +1,42 @@
 import { WebSocketClient } from "./uwebsockets/websocketClient.js";
 import { SocketClient } from "./socketio/socketioClient.js"
+import fs from "fs/promises";
+
+
+
 
 let ackBuffer: { [key: string]: { mId: string, cIds: Set<string>, sessionId: string }} = {};
 
 
-function main() {
+async function main() {
     console.log("main");
     console.log("process.env.PORT", process.env.PORT);
     // const socketClient = new SocketClient();
 
+    const usersData = await fs.readFile("./data.csv", "utf-8").then((data) => {
+        const lines = data.split("\n");
+        const usersData = lines.map((line) => {
+            const [phoneNumber, token] = line.split(",");
+            return { phoneNumber, token: token?.replace("\r", "") };
+        });
+        // console.log(usersData);
+        return usersData;
+    });
+
+
+
     const clients = new Map<string, SocketClient | WebSocketClient>();
     
 
-    for (let i = 0; i < 2500; i++) {
+    for (let i = 0; i < 2; i++) {
         const userId = Math.floor(Math.random() * 1000000000);
+        const randomFullName = Math.random().toString(36).substring(2, 15);
         // const host = "ws://localhost:8080/central-socket/ws"; 
-        const host = "wss://lt-1-central-socket.penpencil.co/central-socket/ws";
-        const url = `${host}?roomContext=poll&scheduleId=66470afbbdf342760a7950b7&${userId}`
+        // const host = "ws://localhost:8080/pw-live-class/ws";
+        const host = "wss://live-class-ws-stage.penpencil.co/pw-live-class/ws";
+        const url = `${host}?context=premium_cohort&scheduleId=67ecdc3fbef0bbe747e74a7a&parentScheduleId=67ecdc3fbef0bbe747e74a7a&sessionRole=STUDENT&micEnabled=false&cameraEnabled=false&isMultiSchedule=false&token=${usersData[i].token}&fullName=${randomFullName}&useQueryFullName=true`
         let client: SocketClient | WebSocketClient;
-        const type = process.env.TYPE;
+        const type = process.env.TYPE ?? "UWEBSOCKETS";
         if (type === "SOCKETIO") {
             client = new SocketClient(url);
         }
@@ -55,10 +73,10 @@ function main() {
     }
 
 
-    setInterval(() => {
-        console.log("ackBuffer", ackBuffer);
-        flushAckBuffer();
-    }, 5000);
+    // setInterval(() => {
+    //     console.log("ackBuffer", ackBuffer);
+    //     flushAckBuffer();
+    // }, 5000);
 }
 
 
